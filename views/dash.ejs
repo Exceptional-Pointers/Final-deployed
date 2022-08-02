@@ -122,7 +122,8 @@
         <% if(room_hist.length> 0){ %>
 
           <ul>
-            <% for(var i=0; i < room_hist.length; i++) { var date=room_hist[i].time; %>
+            <% for(var i=0; i < room_hist?.length; i++) { 
+              var date=room_hist[i].time; %>
               <li class="meetHistoryItems" data-number="<%= i %>">
                 <div class="dashboard__meetings--logo">
                   <i class="lni lni-slideshare"></i>
@@ -143,11 +144,13 @@
       <div class="conference__chat active" style="flex: 1">
         <div class="conference__chat--items">
           <!-- <span class='room_hist'><%= room_hist %></span> -->
-          <% for(var i=0; i < room_hist[room_hist.length-1]?.chats.length; i++){ <!-- Variables -->
+          <% 
+          var room_hist_no = 0;
+          for(var i=0; i < room_hist[room_hist_no]?.chats?.length || 0; i++){ <!-- Variables -->
             var userClass = 'conference__chat--item';
-            var chat = room_hist[room_hist.length-1].chats[i].message;
-            var date = room_hist[room_hist.length-1].chats[i].time;
-            var name = room_hist[room_hist.length-1].chats[i].senders_name;
+            var chat = room_hist[room_hist_no].chats[i].message;
+            var date = room_hist[room_hist_no].chats[i].time;
+            var name = room_hist[room_hist_no].chats[i].senders_name;
             <!-- logic -->
             var boolChat = !(chat.includes('Joined') || chat.includes('Connected') || chat.includes('disconnected'))
             if(name == user && boolChat) {
@@ -208,10 +211,10 @@
       item.addEventListener("click", () => {
         let itemNo = item.getAttribute("data-number")
         let chatStr = ''
-        let room_hist_js = `<%= room_hist[0] %>`
-        console.log('1')
+        let room_hist_js = `<%= room_hist %>`
+        console.log(itemNo)
         console.log(room_hist_js)
-        for (var i = 0; i < room_hist_js[itemNo].chats.length; i++) {
+        for (var i = 0; i < room_hist_js[itemNo]?.chats?.length; i++) {
           var userClass = 'conference__chat--item';
           var chat = room_hist_js[itemNo].chats[i].message;
           var date = room_hist_js[itemNo].chats[i].time;
@@ -241,3 +244,4 @@
 </body>
 
 </html>
+
